@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sheefa: Duas for Cure</title>
+<meta name="description" content="Duas for cure and healing from the Quran and hadith, with Arabic, transliteration, English meaning and references.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f6f4ee;
+  --card: #fffdf8;
+  --ink: #23302b;
+  --muted: #5f6d66;
+  --line: #ddd8ca;
+  --accent: #1f6f5c;
+  --accent-soft: #e2efe9;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131a17;
+    --card: #1b2420;
+    --ink: #e8ebe6;
+    --muted: #a3b0a9;
+    --line: #2f3b35;
+    --accent: #6fc7ae;
+    --accent-soft: #223631;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #131a17;
+  --card: #1b2420;
+  --ink: #e8ebe6;
+  --muted: #a3b0a9;
+  --line: #2f3b35;
+  --accent: #6fc7ae;
+  --accent-soft: #223631;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 17px/1.6 "Source Sans 3", system-ui, sans-serif;
+  overflow-wrap: break-word;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+header { padding: 48px 0 24px; text-align: center; }
+header .mark { font: 700 56px/1.2 "Amiri", serif; color: var(--accent); margin: 0; }
+header h1 { font-size: 30px; line-height: 1.25; margin: 8px 0; }
+header p { color: var(--muted); margin: 0 auto; max-width: 56ch; }
+.notice {
+  background: var(--accent-soft);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 16px auto 0;
+  font-size: 15.5px;
+}
+.tools {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--bg);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.tools input {
+  width: 100%;
+  padding: 10px 12px;
+  font: inherit;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.chips { display: flex; gap: 8px; margin-top: 10px; overflow-x: auto; padding-bottom: 2px; }
+.chips a {
+  flex: none;
+  padding: 4px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink);
+  background: var(--card);
+  text-decoration: none;
+  font-size: 15px;
+}
+.chips a:hover { border-color: var(--accent); color: var(--accent); }
+section { scroll-margin-top: 120px; }
+h2 { font-size: 23px; margin: 36px 0 4px; }
+.lede { color: var(--muted); margin: 0 0 12px; }
+article {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 18px 20px;
+  margin: 14px 0;
+}
+article h3 { font-size: 18px; margin: 0 0 10px; }
+.ar {
+  font: 400 29px/2 "Amiri", "Traditional Arabic", serif;
+  direction: rtl;
+  text-align: right;
+  margin: 0 0 10px;
+}
+.ar .ayah-no { font-size: 20px; color: var(--accent); }
+.ar .surah-title { display: block; font-size: 20px; color: var(--muted); }
+.tr { font-style: italic; color: var(--muted); margin: 0 0 8px; }
+.en { margin: 0 0 10px; }
+.when { margin: 0 0 10px; font-size: 15.5px; }
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+  font-size: 15px;
+  color: var(--muted);
+}
+a { color: var(--accent); }
+button.copy {
+  font: inherit;
+  font-size: 14.5px;
+  color: var(--accent);
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 2px 10px;
+  cursor: pointer;
+}
+audio { width: 100%; margin: 0 0 10px; }
+details { margin: 0 0 10px; font-size: 15.5px; }
+details img { display: block; width: 100%; height: auto; margin-top: 8px; border-radius: 6px; }
+ul.sources { padding-left: 20px; }
+#none { display: none; color: var(--muted); text-align: center; padding: 24px 0; }
+footer { color: var(--muted); font-size: 15px; padding: 24px 0 48px; }
+@media (max-width: 600px) {
+  header { padding: 24px 0 16px; }
+  header .mark { font-size: 44px; }
+  header h1 { font-size: 26px; margin: 4px 0 8px; }
+  /* Search scrolls away, the section buttons stay pinned */
+  .tools { top: -54px; padding: 8px 0; }
+  .tools input { height: 46px; }
+  .chips {
+    margin: 8px -16px 0;
+    padding: 0 16px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .chips::-webkit-scrollbar { display: none; }
+  .chips a { display: flex; align-items: center; min-height: 40px; padding: 0 14px; }
+  section { scroll-margin-top: 64px; }
+  h2 { margin-top: 28px; }
+  article { padding: 16px; margin: 12px 0; }
+  .ar { font-size: clamp(24px, 6.8vw, 29px); line-height: 1.95; }
+  .foot > span { flex: 1 1 100%; }
+  button.copy { flex: 1 1 100%; min-height: 44px; font-size: 16px; }
+  details summary { padding: 8px 0; }
+}
+@media (max-height: 500px) {
+  .tools { top: -54px; padding: 8px 0; }
+  .tools input { height: 46px; }
+  .chips { margin-top: 8px; }
+  section { scroll-margin-top: 64px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="mark" lang="ar" dir="rtl">شِفَاء</p>
+  <h1>Duas for Cure</h1>
+  <p>Supplications for healing from the Quran and the Sunnah, each with its Arabic text, meaning and reference.</p>
+  <p class="notice">Healing is from Allah alone. These duas go alongside medical care and do not replace it, so please keep seeing your doctor.</p>
+</header>
+
+<div class="tools">
+  <input id="q" type="search" placeholder="Search: pain, evil eye, Ayyub" aria-label="Search duas">
+  <nav class="chips" aria-label="Sections">
+    <a href="#sick">For the sick</a>
+    <a href="#pain">For your own pain</a>
+    <a href="#ruqyah">Ruqyah</a>
+    <a href="#health">Good health</a>
+    <a href="#quran">From the Quran</a>
+    <a href="#sources">Sources</a>
+  </nav>
+</div>
+
+<main>
+
+<section id="sick">
+  <h2>For the sick</h2>
+  <p class="lede">Duas to say for those who are ill.</p>
+
+  <article>
+    <h3>Lord of mankind, remove the suffering</h3>
+    <p class="ar" lang="ar">اللَّهُمَّ رَبَّ النَّاسِ، أَذْهِبِ الْبَأْسَ، وَاشْفِ أَنْتَ الشَّافِي، لَا شِفَاءَ إِلَّا شِفَاؤُكَ، شِفَاءً لَا يُغَادِرُ سَقَمًا</p>
+    <p class="tr">Allaahumma Rabban-naas, adhhibil-ba's, washfi antash-Shaafi, laa shifaa'a illaa shifaa'uka, shifaa'an laa yughaadiru saqaman</p>
+    <p class="en">O Allah, Lord of mankind, do away with my suffering. Heal (me), as You are the only Healer, and there is no cure except Yours, a cure that leaves no ailment behind.</p>
+    <p class="when">The Prophet ﷺ would say this when visiting a sick person, wiping them with his right hand. When saying it for someone else, "heal him" or "heal her" is meant.</p>
+    <audio controls preload="none" src="1.1.mp3" aria-label="Recitation of this dua"></audio>
+    <details>
+      <summary>View the original dua card</summary>
+      <img src="1..jpg" width="960" height="720" loading="lazy" alt="Dua card showing this supplication in Arabic, transliteration and English, from Authentic-Dua.com">
+    </details>
+    <div class="foot">
+      <span><a href="https://sunnah.com/bukhari:5675">Al-Bukhari 5675</a>, <a href="https://sunnah.com/muslim:2191">Muslim 2191</a> (close wording). <a href="https://authentic-dua.com/2015/10/26/dua-for-healing-and-good-health/">Reference: Authentic-Dua.com</a></span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+
+  <article>
+    <h3>The ruqyah of the Messenger of Allah ﷺ</h3>
+    <p class="ar" lang="ar">اللَّهُمَّ رَبَّ النَّاسِ مُذْهِبَ الْبَاسِ اشْفِ أَنْتَ الشَّافِي لاَ شَافِيَ إِلاَّ أَنْتَ، شِفَاءً لاَ يُغَادِرُ سَقَمًا</p>
+    <p class="tr">Allaahumma Rabban-naas, mudhhibal-ba's, ishfi antash-Shaafi, laa shaafiya illaa anta, shifaa'an laa yughaadiru saqaman</p>
+    <p class="en">O Allah, Lord of mankind, Remover of suffering, heal, for You are the Healer. There is no healer but You, a healing that leaves no ailment behind.</p>
+    <p class="when">Anas ibn Malik recited this for Thabit, who was unwell.</p>
+    <div class="foot">
+      <span><a href="https://sunnah.com/bukhari:5742">Al-Bukhari 5742</a></span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+
+  <article>
+    <h3>The cure is in Your hand</h3>
+    <p class="ar" lang="ar">امْسَحِ الْبَاسَ رَبَّ النَّاسِ، بِيَدِكَ الشِّفَاءُ، لاَ كَاشِفَ لَهُ إِلاَّ أَنْتَ</p>
+    <p class="tr">Imsahil-ba's, Rabban-naas, biyadikash-shifaa', laa kaashifa lahu illaa anta</p>
+    <p class="en">Remove the suffering, Lord of mankind. The cure is in Your hand, and no one can lift it except You.</p>
+    <div class="foot">
+      <span><a href="https://sunnah.com/bukhari:5744">Al-Bukhari 5744</a></span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+
+  <article>
+    <h3>When visiting the sick (seven times)</h3>
+    <p class="ar" lang="ar">أَسْأَلُ اللَّهَ الْعَظِيمَ رَبَّ الْعَرْشِ الْعَظِيمِ أَنْ يَشْفِيَكَ</p>
+    <p class="tr">As'alullaahal-'Azeem, Rabbal-'Arshil-'Azeem, an yashfiyak</p>
+    <p class="en">I ask Allah the Magnificent, Lord of the Magnificent Throne, to cure you.</p>
+    <p class="when">Say it seven times with a sick person whose appointed time has not come. The Prophet ﷺ said Allah will then cure them of that illness.</p>
+    <div class="foot">
+      <span><a href="https://sunnah.com/abudawud:3106">Abu Dawud 3106</a>, <a href="https://sunnah.com/tirmidhi:2083">At-Tirmidhi 2083</a>. Hisnul Hasin p. 277</span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+
+  <article>
+    <h3>Comforting the sick</h3>
+    <p class="ar" lang="ar">لاَ بَأْسَ طَهُورٌ إِنْ شَاءَ اللَّهُ</p>
+    <p class="tr">Laa ba'sa, tahoorun in shaa' Allaah</p>
+    <p class="en">No harm, it is a purification, if Allah wills.</p>
+    <p class="when">The Prophet ﷺ would say this when he went in to visit a sick person.</p>
+    <div class="foot">
+      <span><a href="https://sunnah.com/bukhari:3616">Al-Bukhari 3616</a>. Hisnul Hasin p. 275</span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+
+  <article>
+    <h3>In the name of Allah, the soil of our land</h3>
+    <p class="ar" lang="ar">بِسْمِ اللَّهِ، تُرْبَةُ أَرْضِنَا بِرِيقَةِ بَعْضِنَا، يُشْفَى سَقِيمُنَا بِإِذْنِ رَبِّنَا</p>
+    <p class="tr">Bismillaah, turbatu ardinaa, bireeqati ba'dinaa, yushfaa saqeemunaa bi-idhni Rabbinaa</p>
+    <p class="en">In the name of Allah, the soil of our land, with the saliva of some of us, our sick one is cured by the permission of our Lord.</p>
+    <p class="when">The Prophet ﷺ would say this to a sick person.</p>
+    <div class="foot">
+      <span><a href="https://sunnah.com/bukhari:5745">Al-Bukhari 5745</a>, <a href="https://sunnah.com/muslim:2194">Muslim 2194</a>. Hisnul Hasin p. 275</span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+
+  <article>
+    <h3>Wiping with the right hand: remove the suffering, heal him</h3>
+    <p class="ar" lang="ar">اللَّهُمَّ رَبَّ النَّاسِ أَذْهِبِ الْبَاسَ، اشْفِهِ وَأَنْتَ الشَّافِي، لاَ شِفَاءَ إِلاَّ شِفَاؤُكَ، شِفَاءً لاَ يُغَادِرُ سَقَمًا</p>
+    <p class="tr">Allaahumma Rabban-naas, adhhibil-ba's, ishfihi wa antash-Shaafi, laa shifaa'a illaa shifaa'uka, shifaa'an laa yughaadiru saqaman</p>
+    <p class="en">O Allah, Lord of mankind, remove the suffering. Heal him, for You are the Healer. There is no cure but Yours, a cure that leaves no ailment behind.</p>
+    <p class="when">The Prophet ﷺ would pass his right hand over the sick person while saying this.</p>
+    <div class="foot">
+      <span><a href="https://sunnah.com/bukhari:5743">Al-Bukhari 5743</a>, <a href="https://sunnah.com/muslim:2191">Muslim 2191</a> (close wording). Hisnul Hasin p. 275</span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+
+  <article>
+    <h3>O Allah, heal him</h3>
+    <p class="ar" lang="ar">اللَّهُمَّ اشْفِهِ، اللَّهُمَّ عَافِهِ، اللَّهُمَّ اعْفِهِ</p>
+    <p class="tr">Allaahumma-shfihi, Allaahumma 'aafihi, Allaahumma a'fihi</p>
+    <p class="en">O Allah, heal him. O Allah, grant him well-being. O Allah, spare him.</p>
+    <div class="foot">
+      <span><a href="https://sunnah.com/tirmidhi:3564">At-Tirmidhi 3564</a>. Hisnul Hasin p. 277 (Al-Hakim, At-Tirmidhi, Ibn Hibban, An-Nasa'i)</span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+
+  <article>
+    <h3>Calling the sick person by name</h3>
+    <p class="ar" lang="ar">يَا فُلَانُ، شَفَى اللَّهُ سَقَمَكَ، وَغَفَرَ ذَنْبَكَ، وَعَافَاكَ فِي دِينِكَ وَجِسْمِكَ إِلَى مُدَّةِ أَجَلِكَ</p>
+    <p class="tr">Yaa fulaan, shafallaahu saqamaka, wa ghafara dhanbaka, wa 'aafaaka fee deenika wa jismika ilaa muddati ajalik</p>
+    <p class="en">O (name of the person), may Allah cure your illness, forgive your sin, and keep you well in your religion and your body until the end of your term.</p>
+    <div class="foot">
+      <span>Al-Hakim, Al-Mustadrak 2014. Hisnul Hasin p. 277</span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+
+  <article>
+    <h3>O Forbearing, O Generous</h3>
+    <p class="ar" lang="ar">يَا حَلِيمُ يَا كَرِيمُ اشْفِ فُلَانًا</p>
+    <p class="tr">Yaa Haleemu, yaa Kareemu, ishfi fulaanan</p>
+    <p class="en">O Forbearing One, O Generous One, heal (name of the person).</p>
+    <p class="when">A man told Ali that someone was ill. Ali asked if he would like that person to recover, then told him to say this.</p>
+    <div class="foot">
+      <span>Musannaf Ibn Abi Shaybah 31477 (Al-Shathri numbering). Hisnul Hasin p. 277</span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+</section>
+
+<section id="pain">
+  <h2>For your own pain</h2>
+  <p class="lede">What to say when you are the one who is ill or in pain.</p>
+
+  <article>
+    <h3>Place your hand where it hurts</h3>
+    <p class="ar" lang="ar">بِاسْمِ اللَّهِ <span class="ayah-no">(٣)</span><br>أَعُوذُ بِاللَّهِ وَقُدْرَتِهِ مِنْ شَرِّ مَا أَجِدُ وَأُحَاذِرُ <span class="ayah-no">(٧)</span></p>
+    <p class="tr">Bismillaah (three times). A'oodhu billaahi wa qudratihi min sharri maa ajidu wa uhaadhiru (seven times)</p>
+    <p class="en">In the name of Allah. I seek refuge in Allah and His power from the evil of what I feel and what I fear.</p>
+    <p class="when">Uthman ibn Abi al-As complained of pain in his body. The Prophet ﷺ told him to place his hand on the place that hurt and say this.</p>
+    <div class="foot">
+      <span><a href="https://sunnah.com/muslim:2202">Muslim 2202</a></span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+
+  <article>
+    <h3>Reciting and blowing over yourself</h3>
+    <p class="en">During his final illness the Prophet ﷺ recited the Mu'awwidhat, blew on his hands and passed them over his face. The text of Surah Al-Falaq and Surah An-Nas is in the <a href="#quran">Quran section</a> below.</p>
+    <div class="foot">
+      <span><a href="https://sunnah.com/bukhari:5735">Al-Bukhari 5735</a></span>
+    </div>
+  </article>
+
+  <article>
+    <h3>The dua of Yunus, during illness (forty times)</h3>
+    <p class="ar" lang="ar">لَّآ إِلَٰهَ إِلَّآ أَنتَ سُبْحَٰنَكَ إِنِّى كُنتُ مِنَ ٱلظَّٰلِمِينَ</p>
+    <p class="tr">Laa ilaaha illaa anta subhaanaka innee kuntu minaz-zaalimeen</p>
+    <p class="en">There is no god except You. Glory be to You. Indeed, I have been of the wrongdoers.</p>
+    <p class="when">Hisnul Hasin reports that whoever says this forty times in illness and dies of it receives the reward of a martyr, and if they recover, their sins are forgiven.</p>
+    <div class="foot">
+      <span>Quran 21:87. <a href="https://sunnah.com/tirmidhi:3505">At-Tirmidhi 3505</a>. Hisnul Hasin p. 278 (Al-Hakim)</span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+
+  <article>
+    <h3>To keep saying during illness</h3>
+    <p class="ar" lang="ar">لاَ إِلَهَ إِلاَّ اللَّهُ وَاللَّهُ أَكْبَرُ، لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ، لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لاَ إِلَهَ إِلاَّ اللَّهُ لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، لاَ إِلَهَ إِلاَّ اللَّهُ وَلاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ</p>
+    <p class="tr">Laa ilaaha illallaahu wallaahu akbar, laa ilaaha illallaahu wahdah, laa ilaaha illallaahu wahdahu laa shareeka lah, laa ilaaha illallaahu lahul-mulku wa lahul-hamd, laa ilaaha illallaahu wa laa hawla wa laa quwwata illaa billaah</p>
+    <p class="en">There is no god but Allah, and Allah is the Greatest. There is no god but Allah alone. There is no god but Allah alone, with no partner. There is no god but Allah; His is the dominion and His is the praise. There is no god but Allah, and there is no might or power except with Allah.</p>
+    <p class="when">The Prophet ﷺ said that whoever says these words in illness and then dies, the Fire will not touch them.</p>
+    <div class="foot">
+      <span><a href="https://sunnah.com/tirmidhi:3430">At-Tirmidhi 3430</a>, <a href="https://sunnah.com/ibnmajah:3794">Ibn Majah 3794</a>. Hisnul Hasin p. 278</span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+</section>
+
+<section id="ruqyah">
+  <h2>Ruqyah</h2>
+  <p class="lede">Words of healing and protection, including what the angel Jibril recited for the Prophet ﷺ.</p>
+
+  <article>
+    <h3>The ruqyah of Jibril</h3>
+    <p class="ar" lang="ar">بِاسْمِ اللَّهِ أَرْقِيكَ مِنْ كُلِّ شَىْءٍ يُؤْذِيكَ مِنْ شَرِّ كُلِّ نَفْسٍ أَوْ عَيْنِ حَاسِدٍ اللَّهُ يَشْفِيكَ بِاسْمِ اللَّهِ أَرْقِيكَ</p>
+    <p class="tr">Bismillaahi arqeek, min kulli shay'in yu'dheek, min sharri kulli nafsin aw 'ayni haasidin, Allaahu yashfeek, bismillaahi arqeek</p>
+    <p class="en">In the name of Allah I recite over you, from everything that harms you, from the evil of every soul or envious eye. May Allah cure you. In the name of Allah I recite over you.</p>
+    <div class="foot">
+      <span><a href="https://sunnah.com/muslim:2186">Muslim 2186</a>. Hisnul Hasin pp. 275-276</span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+
+  <article>
+    <h3>From every disease</h3>
+    <p class="ar" lang="ar">بِاسْمِ اللَّهِ يُبْرِيكَ وَمِنْ كُلِّ دَاءٍ يَشْفِيكَ وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ وَشَرِّ كُلِّ ذِي عَيْنٍ</p>
+    <p class="tr">Bismillaahi yubreek, wa min kulli daa'in yashfeek, wa min sharri haasidin idhaa hasad, wa sharri kulli dhee 'ayn</p>
+    <p class="en">In the name of Allah, may He make you well and cure you of every disease, and from the evil of an envier when he envies, and the evil of every evil eye.</p>
+    <p class="when">Jibril recited this when the Prophet ﷺ was unwell.</p>
+    <div class="foot">
+      <span><a href="https://sunnah.com/muslim:2185">Muslim 2185</a></span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+
+  <article>
+    <h3>From every disease within you (three times)</h3>
+    <p class="ar" lang="ar">بِسْمِ اللَّهِ أَرْقِيكَ وَاللَّهُ يَشْفِيكَ مِنْ كُلِّ دَاءٍ فِيكَ مِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ</p>
+    <p class="tr">Bismillaahi arqeeka, wallaahu yashfeeka min kulli daa'in feeka, min sharrin-naffaathaati fil-'uqadi, wa min sharri haasidin idhaa hasad</p>
+    <p class="en">In the name of Allah I recite over you, and Allah will cure you of every disease within you, from the evil of those who blow on knots, and from the evil of an envier when he envies.</p>
+    <div class="foot">
+      <span><a href="https://sunnah.com/ibnmajah:3524">Ibn Majah 3524</a>. Hisnul Hasin p. 276 (Ibn Abi Shaybah, An-Nasa'i)</span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+
+  <article>
+    <h3>From the evil of every envier (three times)</h3>
+    <p class="ar" lang="ar">بِسْمِ اللَّهِ أَرْقِيكَ مِنْ كُلِّ دَاءٍ يَشْفِيكَ مِنْ شَرِّ كُلِّ حَاسِدٍ إِذَا حَسَدَ وَمِنْ كُلِّ ذِي عَيْنٍ</p>
+    <p class="tr">Bismillaahi arqeeka min kulli daa'in yashfeeka, min sharri kulli haasidin idhaa hasad, wa min kulli dhee 'ayn</p>
+    <p class="en">In the name of Allah I recite over you. May He cure you of every disease, from the evil of every envier when he envies, and from every evil eye.</p>
+    <div class="foot">
+      <span>Hisnul Hasin p. 276 (Ahmad)</span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+
+</section>
+
+<section id="health">
+  <h2>Good health</h2>
+  <p class="lede">Asking Allah for well-being, and for protection from illness.</p>
+
+  <article>
+    <h3>Health in body, hearing and sight (morning and evening)</h3>
+    <p class="ar" lang="ar">اللَّهُمَّ عَافِنِي فِي بَدَنِي اللَّهُمَّ عَافِنِي فِي سَمْعِي اللَّهُمَّ عَافِنِي فِي بَصَرِي لاَ إِلَهَ إِلاَّ أَنْتَ</p>
+    <p class="tr">Allaahumma 'aafinee fee badanee, Allaahumma 'aafinee fee sam'ee, Allaahumma 'aafinee fee basaree, laa ilaaha illaa anta</p>
+    <p class="en">O Allah, grant me health in my body. O Allah, grant me health in my hearing. O Allah, grant me health in my sight. There is no god but You.</p>
+    <p class="when">Abu Bakrah repeated this three times each morning and evening, following the Prophet ﷺ.</p>
+    <div class="foot">
+      <span><a href="https://sunnah.com/abudawud:5090">Abu Dawud 5090</a></span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+
+  <article>
+    <h3>Well-being in this world and the next</h3>
+    <p class="ar" lang="ar">اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَافِيَةَ فِي الدُّنْيَا وَالآخِرَةِ</p>
+    <p class="tr">Allaahumma innee as'alukal-'aafiyata fid-dunyaa wal-aakhirah</p>
+    <p class="en">O Allah, I ask You for well-being in this world and the Hereafter.</p>
+    <p class="when">The opening of a dua the Prophet ﷺ never left, morning or evening.</p>
+    <div class="foot">
+      <span><a href="https://sunnah.com/abudawud:5074">Abu Dawud 5074</a>, <a href="https://sunnah.com/ibnmajah:3871">Ibn Majah 3871</a></span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+
+  <article>
+    <h3>Refuge from serious diseases</h3>
+    <p class="ar" lang="ar">اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْبَرَصِ وَالْجُنُونِ وَالْجُذَامِ وَمِنْ سَيِّئِ الأَسْقَامِ</p>
+    <p class="tr">Allaahumma innee a'oodhu bika minal-barasi wal-junooni wal-judhaami wa min sayyi'il-asqaam</p>
+    <p class="en">O Allah, I seek refuge in You from leprosy, madness, elephantiasis and all evil diseases.</p>
+    <div class="foot">
+      <span><a href="https://sunnah.com/abudawud:1554">Abu Dawud 1554</a></span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+</section>
+
+<section id="quran">
+  <h2>From the Quran</h2>
+  <p class="lede">The dua of Prophet Ayyub and the surahs used for ruqyah.</p>
+
+  <article>
+    <h3>The dua of Ayyub (peace be upon him)</h3>
+    <p class="ar" lang="ar">أَنِّى مَسَّنِىَ ٱلضُّرُّ وَأَنتَ أَرْحَمُ ٱلرَّٰحِمِينَ</p>
+    <p class="tr">Annee massaniyad-durru wa anta arhamur-raahimeen</p>
+    <p class="en">Indeed, adversity has touched me, and You are the Most Merciful of the merciful.</p>
+    <p class="when">Allah says in the next verse: "So We responded to him and removed what afflicted him of adversity."</p>
+    <div class="foot">
+      <span>Quran 21:83-84</span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+
+  <article>
+    <h3>Ayyub's call in his hardship</h3>
+    <p class="ar" lang="ar">أَنِّى مَسَّنِىَ ٱلشَّيْطَٰنُ بِنُصْبٍۢ وَعَذَابٍ</p>
+    <p class="tr">Annee massaniyash-shaytaanu binusbin wa 'adhaab</p>
+    <p class="en">Indeed, Satan has touched me with hardship and torment.</p>
+    <div class="foot">
+      <span>Quran 38:41</span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+
+  <article>
+    <h3>Surah Al-Fatihah, the ruqyah</h3>
+    <p class="ar" lang="ar">
+      <span>بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</span> <span class="ayah-no">(١)</span>
+      <span>ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ</span> <span class="ayah-no">(٢)</span>
+      <span>ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</span> <span class="ayah-no">(٣)</span>
+      <span>مَٰلِكِ يَوْمِ ٱلدِّينِ</span> <span class="ayah-no">(٤)</span>
+      <span>إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ</span> <span class="ayah-no">(٥)</span>
+      <span>ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ</span> <span class="ayah-no">(٦)</span>
+      <span>صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ</span> <span class="ayah-no">(٧)</span>
+    </p>
+    <p class="en">In the name of Allah, the Entirely Merciful, the Especially Merciful. All praise is due to Allah, Lord of the worlds, the Entirely Merciful, the Especially Merciful, Sovereign of the Day of Recompense. It is You we worship and You we ask for help. Guide us to the straight path, the path of those upon whom You have bestowed favor, not of those who have evoked Your anger or of those who are astray.</p>
+    <p class="when">A Companion recited it over a tribal chief who had been stung, and he recovered. The Prophet ﷺ asked, "How did you know that it is a ruqyah?"</p>
+    <div class="foot">
+      <span>Quran 1:1-7. <a href="https://sunnah.com/bukhari:5736">Al-Bukhari 5736</a></span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+
+  <article>
+    <h3>Surah Al-Falaq</h3>
+    <p class="ar" lang="ar">
+      <span>قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ</span> <span class="ayah-no">(١)</span>
+      <span>مِن شَرِّ مَا خَلَقَ</span> <span class="ayah-no">(٢)</span>
+      <span>وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ</span> <span class="ayah-no">(٣)</span>
+      <span>وَمِن شَرِّ ٱلنَّفَّٰثَٰتِ فِى ٱلْعُقَدِ</span> <span class="ayah-no">(٤)</span>
+      <span>وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ</span> <span class="ayah-no">(٥)</span>
+    </p>
+    <p class="en">Say, "I seek refuge in the Lord of daybreak from the evil of that which He created, and from the evil of darkness when it settles, and from the evil of the blowers in knots, and from the evil of an envier when he envies."</p>
+    <div class="foot">
+      <span>Quran 113. Recited for illness: <a href="https://sunnah.com/bukhari:5735">Al-Bukhari 5735</a></span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+
+  <article>
+    <h3>Surah An-Nas</h3>
+    <p class="ar" lang="ar">
+      <span>قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ</span> <span class="ayah-no">(١)</span>
+      <span>مَلِكِ ٱلنَّاسِ</span> <span class="ayah-no">(٢)</span>
+      <span>إِلَٰهِ ٱلنَّاسِ</span> <span class="ayah-no">(٣)</span>
+      <span>مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ</span> <span class="ayah-no">(٤)</span>
+      <span>ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ</span> <span class="ayah-no">(٥)</span>
+      <span>مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ</span> <span class="ayah-no">(٦)</span>
+    </p>
+    <p class="en">Say, "I seek refuge in the Lord of mankind, the Sovereign of mankind, the God of mankind, from the evil of the retreating whisperer, who whispers evil into the breasts of mankind, from among the jinn and mankind."</p>
+    <div class="foot">
+      <span>Quran 114. Recited for illness: <a href="https://sunnah.com/bukhari:5735">Al-Bukhari 5735</a></span>
+      <button class="copy" type="button">Copy Arabic</button>
+    </div>
+  </article>
+
+</section>
+
+<p id="none">Nothing matched your search.</p>
+
+<section id="sources">
+  <h2>Sources</h2>
+  <ul class="sources">
+    <li><a href="https://authentic-dua.com/2015/10/26/dua-for-healing-and-good-health/">Dua for healing and good health, Authentic-Dua.com</a>: the first dua, its card and its audio. The card cites Al-Bukhari (with Al-Fath 10/206), Muslim (4/1721) and <em>Supplications &amp; Treatment with Ruqyah</em> by Dr. Sa'eed bin Ali Al-Qahtani (Dar-us-Salam).</li>
+    <li><em>Hisnul Hasin</em> by Imam Ibn al-Jazari, Bengali edition, pp. 275-278: the duas marked with a page number. Where the book names other collections, they are shown in brackets.</li>
+    <li>Hadith Arabic text: <a href="https://github.com/fawazahmed0/hadith-api">hadith-api</a>, with references linked to <a href="https://sunnah.com">Sunnah.com</a>.</li>
+    <li>Quran Arabic text (Uthmani) and English (Saheeh International, lightly edited): <a href="https://alquran.cloud">AlQuran Cloud</a>.</li>
+    <li>Hadith translations here are plain renderings to give the meaning. Please rely on the Arabic for recitation.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer>May Allah grant complete healing to all who are sick. Ameen.</footer>
+
+</div>
+
+<script>
+var input = document.getElementById('q');
+var cards = Array.prototype.slice.call(document.querySelectorAll('article'));
+var none = document.getElementById('none');
+
+input.addEventListener('input', function () {
+  var term = input.value.trim().toLowerCase();
+  var shown = 0;
+  cards.forEach(function (card) {
+    var match = card.textContent.toLowerCase().indexOf(term) !== -1;
+    card.hidden = !match;
+    if (match) shown++;
+  });
+  document.querySelectorAll('main section').forEach(function (s) {
+    if (s.id === 'sources') return;
+    s.hidden = !s.querySelector('article:not([hidden])');
+  });
+  none.style.display = shown ? 'none' : 'block';
+});
+
+document.addEventListener('click', function (e) {
+  if (!e.target.matches('button.copy')) return;
+  var btn = e.target;
+  var text = btn.closest('article').querySelector('.ar').textContent.replace(/\s+/g, ' ').trim();
+  navigator.clipboard.writeText(text).then(function () {
+    btn.textContent = 'Copied';
+    setTimeout(function () { btn.textContent = 'Copy Arabic'; }, 1500);
+  });
+});
+</script>
+</body>
+</html>
